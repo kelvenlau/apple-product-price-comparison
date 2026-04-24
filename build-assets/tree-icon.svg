@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef8e7" />
+      <stop offset="56%" stop-color="#92cf7e" />
+      <stop offset="100%" stop-color="#5ea55a" />
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="24%" r="36%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.75)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+    </radialGradient>
+  </defs>
+
+  <rect x="50" y="50" width="924" height="924" rx="220" fill="url(#bg)" />
+  <ellipse cx="332" cy="272" rx="160" ry="110" fill="url(#glow)" />
+  <text
+    x="512"
+    y="642"
+    text-anchor="middle"
+    font-size="620"
+    font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif"
+  >
+    🌲
+  </text>
+</svg>

@@ -1,0 +1,53 @@
+{
+  "name": "colleague-apple-tree",
+  "version": "1.0.0",
+  "description": "A desktop Apple tree tracker for colleague names.",
+  "author": "Codex",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "cache:prepare": "node scripts/prepare-cache.mjs",
+    "cache:verify": "node scripts/verify-cache.mjs",
+    "icon:generate": "zsh scripts/generate-icon.sh",
+    "dist": "npm run cache:verify && electron-builder",
+    "dist:dir": "npm run cache:verify && electron-builder --dir",
+    "dist:offline": "npm run cache:prepare && electron-builder",
+    "dist:portable": "npm run cache:prepare && electron-builder --dir"
+  },
+  "build": {
+    "appId": "com.codex.colleagueappletree",
+    "productName": "Trade-in Apple Tree",
+    "electronVersion": "37.10.3",
+    "electronDist": "build-cache/electron/dist",
+    "files": [
+      "index.html",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "icon": "build-assets/icon.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^37.0.0",
+    "electron-builder": "^26.0.0"
+  }
+}

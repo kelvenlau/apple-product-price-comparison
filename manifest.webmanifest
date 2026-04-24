@@ -1,0 +1,27 @@
+{
+  "name": "Apple Product Price Comparison",
+  "short_name": "Apple Price",
+  "description": "实时对比 Apple 官方网站在不同国家与地区的产品价格。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f5f8",
+  "theme_color": "#f4f5f8",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/build-assets/icon.iconset/icon_128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/build-assets/icon.iconset/icon_256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/build-assets/icon.iconset/icon_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
