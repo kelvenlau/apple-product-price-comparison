@@ -9,37 +9,24 @@
     <meta name="theme-color" content="#f4f5f8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <title>Apple Product Price Comparison</title>
+    <title>KL Development</title>
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/build-assets/icon.iconset/icon_512x512.png" />
     <style>
       :root {
         color-scheme: light;
         --bg: #f4f5f8;
-        --bg-secondary: #fcfcfe;
         --surface: rgba(255, 255, 255, 0.78);
         --surface-strong: rgba(255, 255, 255, 0.92);
-        --surface-muted: rgba(248, 249, 252, 0.76);
-        --surface-highlight: rgba(255, 255, 255, 0.96);
         --border: rgba(90, 101, 124, 0.12);
-        --border-strong: rgba(90, 101, 124, 0.18);
         --text: #1d1d1f;
         --subtext: #62646c;
         --accent: #0a84ff;
-        --accent-strong: #0066cc;
-        --accent-soft: rgba(10, 132, 255, 0.12);
-        --accent-wash: rgba(97, 181, 255, 0.18);
-        --success: #138a52;
-        --danger: #c53b32;
-        --danger-soft: rgba(197, 59, 50, 0.08);
-        --success-soft: rgba(19, 138, 82, 0.09);
         --shadow: 0 26px 70px rgba(39, 51, 71, 0.12);
         --shadow-soft: 0 14px 34px rgba(39, 51, 71, 0.08);
-        --inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
-        --radius-xl: 28px;
-        --radius-lg: 22px;
+        --radius-xl: 30px;
+        --radius-lg: 24px;
         --radius-md: 18px;
-        --radius-sm: 14px;
         font-family:
           "SF Pro Display",
           "SF Pro Text",
@@ -67,51 +54,16 @@
       }
 
       body {
-        display: flex;
-        justify-content: center;
-        padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
-        position: relative;
-        overflow-x: hidden;
+        padding: max(18px, env(safe-area-inset-top)) 18px max(28px, env(safe-area-inset-bottom));
       }
 
-      body::before,
-      body::after {
-        content: "";
-        position: fixed;
-        inset: auto;
-        border-radius: 999px;
-        pointer-events: none;
-        filter: blur(36px);
-        opacity: 0.9;
-      }
-
-      body::before {
-        top: 104px;
-        left: -80px;
-        width: 220px;
-        height: 220px;
-        background: rgba(95, 170, 255, 0.13);
-      }
-
-      body::after {
-        right: -56px;
-        bottom: 140px;
-        width: 200px;
-        height: 200px;
-        background: rgba(255, 201, 145, 0.12);
-      }
-
-      .app-shell {
-        width: min(100%, 430px);
-        position: relative;
+      main {
+        width: min(100%, 980px);
+        margin: 0 auto;
       }
 
       .hero {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        padding: 20px 0 16px;
-        backdrop-filter: blur(18px);
+        padding: 18px 0 22px;
       }
 
       .eyebrow {
@@ -120,203 +72,111 @@
         gap: 8px;
         padding: 8px 12px;
         border-radius: 999px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 249, 252, 0.9));
         border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 249, 252, 0.9));
         box-shadow: var(--shadow-soft);
         color: var(--accent);
         font-size: 12px;
         font-weight: 600;
-        letter-spacing: 0.02em;
       }
 
       h1 {
-        margin: 14px 0 10px;
-        font-size: clamp(32px, 7vw, 42px);
-        line-height: 1.02;
-        letter-spacing: -0.04em;
+        margin: 16px 0 12px;
+        font-size: clamp(34px, 7vw, 58px);
+        line-height: 1;
+        letter-spacing: -0.05em;
       }
 
       .hero p {
         margin: 0;
+        max-width: 36rem;
         color: var(--subtext);
-        font-size: 15px;
-        line-height: 1.5;
-        max-width: 28ch;
+        font-size: 17px;
+        line-height: 1.6;
       }
 
-      .stack {
-        display: grid;
-        gap: 16px;
-      }
-
-      .panel {
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(247, 249, 252, 0.74));
-        border: 1px solid var(--border);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(18px);
-        box-shadow: var(--shadow), var(--inner-glow);
-      }
-
-      .controls {
-        padding: 18px;
-        display: grid;
-        gap: 14px;
-      }
-
-      .field {
-        display: grid;
-        gap: 8px;
-      }
-
-      .field label {
-        font-size: 13px;
-        color: var(--subtext);
-        font-weight: 600;
-      }
-
-      .field select,
-      .refresh-button,
-      .source-link {
-        -webkit-appearance: none;
-        appearance: none;
-        border: 0;
-        outline: 0;
-        font: inherit;
-      }
-
-      .field select {
-        width: 100%;
-        padding: 16px 18px;
-        border-radius: var(--radius-md);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 249, 252, 0.9));
-        color: var(--text);
-        border: 1px solid var(--border-strong);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.86),
-          0 1px 2px rgba(39, 51, 71, 0.04);
-        transition:
-          border-color 180ms ease,
-          box-shadow 180ms ease,
-          transform 180ms ease;
-      }
-
-      .field select:focus {
-        border-color: rgba(10, 132, 255, 0.34);
-        box-shadow:
-          0 0 0 4px rgba(10, 132, 255, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      }
-
-      .controls-row {
-        display: flex;
-        gap: 10px;
-      }
-
-      .refresh-button {
-        flex: 1;
-        padding: 14px 18px;
-        border-radius: 999px;
-        background:
-          linear-gradient(180deg, #2d3138 0%, #17191d 100%);
-        color: white;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          0 12px 24px rgba(23, 25, 29, 0.18);
-        transition:
-          transform 180ms ease,
-          box-shadow 180ms ease,
-          opacity 180ms ease;
-      }
-
-      .refresh-button:hover {
-        transform: translateY(-1px);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.16),
-          0 16px 28px rgba(23, 25, 29, 0.22);
-      }
-
-      .refresh-button:disabled {
-        opacity: 0.55;
-        cursor: progress;
-      }
-
-      .summary {
-        padding: 20px;
+      .grid {
         display: grid;
         gap: 18px;
       }
 
-      .summary-head {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 16px;
+      .card {
+        padding: 22px;
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(247, 249, 252, 0.74));
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
       }
 
-      .summary-kicker {
+      .featured {
+        display: grid;
+        gap: 20px;
+      }
+
+      .featured-label {
         color: var(--accent);
         font-size: 13px;
         font-weight: 700;
       }
 
-      .summary-title {
-        margin: 6px 0 0;
-        font-size: 24px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
+      .featured h2,
+      .coming h2 {
+        margin: 8px 0 10px;
+        font-size: 28px;
+        line-height: 1.08;
+        letter-spacing: -0.04em;
       }
 
-      .summary-note {
-        margin: 6px 0 0;
+      .featured p,
+      .coming p,
+      .meta {
+        margin: 0;
         color: var(--subtext);
-        font-size: 14px;
-        line-height: 1.5;
+        line-height: 1.6;
       }
 
-      .price-card {
-        padding: 18px;
-        border-radius: var(--radius-lg);
-        background:
-          radial-gradient(circle at top left, rgba(120, 190, 255, 0.26), transparent 42%),
-          linear-gradient(135deg, rgba(10, 132, 255, 0.08), rgba(255, 255, 255, 0.86)),
-          var(--surface-strong);
-        border: 1px solid rgba(10, 132, 255, 0.16);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
       }
 
-      .price-card strong {
-        display: block;
-        font-size: 40px;
-        line-height: 1;
-        letter-spacing: -0.05em;
+      .primary,
+      .secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
       }
 
-      .price-card span {
-        display: block;
-        margin-top: 8px;
-        color: var(--subtext);
-        font-size: 14px;
+      .primary {
+        background: linear-gradient(180deg, #2d3138 0%, #17191d 100%);
+        color: white;
+        box-shadow: 0 12px 24px rgba(23, 25, 29, 0.18);
       }
 
-      .meta-grid {
+      .secondary {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--text);
+      }
+
+      .meta-list {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
       }
 
       .meta-item {
-        padding: 14px 16px;
+        padding: 16px 18px;
         border-radius: var(--radius-md);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(245, 247, 251, 0.74));
         border: 1px solid var(--border);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+        background: rgba(255, 255, 255, 0.74);
       }
 
       .meta-item small {
@@ -327,631 +187,112 @@
 
       .meta-item strong {
         display: block;
-        margin-top: 6px;
-        font-size: 16px;
+        margin-top: 8px;
+        font-size: 17px;
         letter-spacing: -0.02em;
       }
 
-      .region-list {
+      .coming {
+        display: grid;
+        gap: 16px;
+      }
+
+      .coming-list {
         display: grid;
         gap: 12px;
       }
 
-      .region-card {
-        padding: 16px;
-        display: grid;
-        gap: 10px;
-        border-radius: var(--radius-lg);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(247, 249, 252, 0.76));
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow-soft);
-        box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.86);
-      }
-
-      .region-card.is-default {
-        border-color: rgba(10, 132, 255, 0.24);
-        background:
-          radial-gradient(circle at top left, rgba(130, 197, 255, 0.2), transparent 36%),
-          linear-gradient(135deg, rgba(10, 132, 255, 0.08), rgba(255, 255, 255, 0.82)),
-          var(--surface);
-      }
-
-      .region-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .region-title {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 6px 10px;
-        border-radius: 999px;
-        background:
-          linear-gradient(180deg, rgba(224, 239, 255, 0.96), rgba(209, 231, 255, 0.86));
-        color: var(--accent);
-        font-size: 12px;
-        font-weight: 700;
-        border: 1px solid rgba(10, 132, 255, 0.1);
-      }
-
-      .region-name {
-        font-weight: 700;
-      }
-
-      .region-price {
-        font-size: 22px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-      }
-
-      .region-cny {
-        font-size: 14px;
-        font-weight: 700;
-      }
-
-      .region-cny.is-expensive {
-        color: var(--danger);
-      }
-
-      .region-cny.is-cheaper {
-        color: var(--success);
-      }
-
-      .region-cny.is-neutral {
-        color: var(--subtext);
-      }
-
-      .delta-pill {
-        display: inline-flex;
-        align-items: center;
-        width: fit-content;
-        padding: 7px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      .delta-pill.is-expensive {
-        color: var(--danger);
-        background: var(--danger-soft);
-      }
-
-      .delta-pill.is-cheaper {
-        color: var(--success);
-        background: var(--success-soft);
-      }
-
-      .delta-pill.is-neutral {
-        color: var(--subtext);
-        background: rgba(110, 110, 115, 0.1);
-      }
-
-      .region-meta,
-      .status-row {
-        color: var(--subtext);
-        font-size: 13px;
-      }
-
-      .source-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 42px;
-        padding: 0 14px;
-        border-radius: 999px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 248, 252, 0.92));
-        border: 1px solid var(--border);
-        color: var(--text);
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
-        transition:
-          transform 180ms ease,
-          border-color 180ms ease,
-          background 180ms ease;
-      }
-
-      .source-link:hover {
-        transform: translateY(-1px);
-        border-color: rgba(10, 132, 255, 0.2);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(238, 245, 255, 0.94));
-      }
-
-      .status-row {
-        padding: 14px 16px;
+      .coming-item {
+        padding: 16px 18px;
         border-radius: var(--radius-md);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(246, 248, 252, 0.8));
-        border: 1px dashed var(--border-strong);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+        border: 1px dashed rgba(90, 101, 124, 0.24);
+        background: rgba(255, 255, 255, 0.62);
       }
 
-      .status-row.is-error {
-        color: var(--danger);
-        border-style: solid;
-        background: rgba(201, 52, 47, 0.06);
+      .coming-item strong {
+        display: block;
+        margin-bottom: 6px;
       }
 
-      .footer-note {
-        padding: 0 4px 8px;
+      .footer {
+        margin-top: 18px;
         color: var(--subtext);
         font-size: 12px;
-        line-height: 1.5;
         text-align: center;
       }
 
-      @media (min-width: 768px) {
-        body {
-          padding: 24px;
-        }
-
-        .app-shell {
-          width: min(100%, 920px);
-        }
-
-        .stack {
-          grid-template-columns: 320px 1fr;
+      @media (min-width: 860px) {
+        .grid {
+          grid-template-columns: 1.35fr 0.9fr;
           align-items: start;
-        }
-
-        .hero {
-          padding-top: 8px;
         }
       }
     </style>
   </head>
   <body>
-    <main class="app-shell">
+    <main>
       <section class="hero">
-        <div class="eyebrow">Apple 官方价 · 实时抓取</div>
-        <h1>Apple Product Price Comparison</h1>
+        <div class="eyebrow">KL Development · Tools</div>
+        <h1>一个统一入口，逐步放进更多实用工具。</h1>
         <p>
-          先看中国官网价格，再同步对照其他国家与地区的 Apple 官方售价。
+          这是 `kldevelopment.cn` 的主站首页。当前已经上线的第一个功能，是一个适合手机使用的 Apple 官方价格实时对比工具。
         </p>
       </section>
 
-      <section class="stack">
-        <div class="panel controls">
-          <div class="field">
-            <label for="categorySelect">产品品类</label>
-            <select id="categorySelect"></select>
+      <section class="grid">
+        <article class="card featured">
+          <div>
+            <div class="featured-label">已上线功能</div>
+            <h2>Apple Product Price Comparison</h2>
+            <p>
+              实时抓取 Apple 官方购买页价格，默认显示中国官网，并同步对比多个国家与地区价格，支持人民币换算与排序。
+            </p>
           </div>
-          <div class="field">
-            <label for="productSelect">产品</label>
-            <select id="productSelect"></select>
-          </div>
-          <div class="field">
-            <label for="variantSelect" id="variantLabel">容量 / 配置</label>
-            <select id="variantSelect"></select>
-          </div>
-          <div class="controls-row">
-            <button class="refresh-button" id="refreshButton" type="button">刷新官网价格</button>
-          </div>
-          <div class="status-row" id="statusMessage">正在连接 Apple 官方购买页…</div>
-        </div>
 
-        <div class="stack">
-          <section class="panel summary">
-            <div class="summary-head">
-              <div>
-                <div class="summary-kicker">默认展示</div>
-                <div class="summary-title" id="summaryTitle">中国大陆官网</div>
-                <p class="summary-note" id="summaryNote">
-                  选择品类、产品和容量后，这里会优先显示中国官网对应价格。
-                </p>
-              </div>
-              <span class="badge" id="liveBadge">实时</span>
+          <div class="actions">
+            <a class="primary" href="/appleprice/">进入价格对比工具</a>
+            <a class="secondary" href="/appleprice/">手机打开测试</a>
+          </div>
+
+          <div class="meta-list">
+            <div class="meta-item">
+              <small>访问路径</small>
+              <strong>/appleprice</strong>
             </div>
-
-            <div class="price-card">
-              <strong id="chinaPrice">--</strong>
-              <span id="chinaMeta">等待价格数据</span>
+            <div class="meta-item">
+              <small>适用设备</small>
+              <strong>手机优先 / 桌面可用</strong>
             </div>
+          </div>
+        </article>
 
-            <div class="meta-grid">
-              <div class="meta-item">
-                <small>当前产品</small>
-                <strong id="selectedProductMeta">--</strong>
-              </div>
-              <div class="meta-item">
-                <small id="selectedVariantMetaLabel">当前容量 / 配置</small>
-                <strong id="selectedVariantMeta">--</strong>
-              </div>
+        <aside class="card coming">
+          <div>
+            <div class="featured-label">后续扩展</div>
+            <h2>未来可以继续挂更多工具页面。</h2>
+            <p>
+              你后面只需要继续往这个主站里增加新的路径，就可以逐步扩展成自己的工具集合站。
+            </p>
+          </div>
+
+          <div class="coming-list">
+            <div class="coming-item">
+              <strong>/appleprice</strong>
+              <div class="meta">Apple 官方价格实时对比</div>
             </div>
-          </section>
-
-          <section class="region-list" id="regionList"></section>
-        </div>
+            <div class="coming-item">
+              <strong>/tradein</strong>
+              <div class="meta">未来可扩展成 Apple 换购或价格测算工具</div>
+            </div>
+            <div class="coming-item">
+              <strong>/xxxx</strong>
+              <div class="meta">后续你想加的任何内部网页功能</div>
+            </div>
+          </div>
+        </aside>
       </section>
 
-      <p class="footer-note">
-        数据来源为 Apple 官方购买页内嵌价格数据。不同地区税费、销售政策和可售机型可能不同，请以下方官网链接为准。
-      </p>
-      <p class="footer-note">©️ 2026 R577</p>
+      <p class="footer">© 2026 KL Development</p>
     </main>
-
-    <script>
-      const appClient =
-        window.applePricingApp ||
-        {
-          async getBootstrap() {
-            const response = await fetch("/api/bootstrap");
-            if (!response.ok) {
-              throw new Error(`bootstrap 接口返回 ${response.status}`);
-            }
-
-            return response.json();
-          },
-          async fetchSnapshot(productId) {
-            const response = await fetch(`/api/snapshot?productId=${encodeURIComponent(productId)}`);
-            const payload = await response.json().catch(() => ({}));
-
-            if (!response.ok) {
-              throw new Error(payload?.error || `snapshot 接口返回 ${response.status}`);
-            }
-
-            return payload;
-          },
-          async openExternal(url) {
-            window.open(url, "_blank", "noopener,noreferrer");
-          },
-        };
-
-      const state = {
-        bootstrap: null,
-        snapshot: null,
-        selectedCategoryId: null,
-        selectedProductId: null,
-        selectedVariant: null,
-      };
-
-      const categorySelect = document.querySelector("#categorySelect");
-      const productSelect = document.querySelector("#productSelect");
-      const variantSelect = document.querySelector("#variantSelect");
-      const variantLabel = document.querySelector("#variantLabel");
-      const refreshButton = document.querySelector("#refreshButton");
-      const statusMessage = document.querySelector("#statusMessage");
-      const summaryTitle = document.querySelector("#summaryTitle");
-      const summaryNote = document.querySelector("#summaryNote");
-      const chinaPrice = document.querySelector("#chinaPrice");
-      const chinaMeta = document.querySelector("#chinaMeta");
-      const selectedProductMeta = document.querySelector("#selectedProductMeta");
-      const selectedVariantMetaLabel = document.querySelector("#selectedVariantMetaLabel");
-      const selectedVariantMeta = document.querySelector("#selectedVariantMeta");
-      const regionList = document.querySelector("#regionList");
-      const liveBadge = document.querySelector("#liveBadge");
-
-      function setLoading(isLoading) {
-        refreshButton.disabled = isLoading;
-        refreshButton.textContent = isLoading ? "正在刷新…" : "刷新官网价格";
-        liveBadge.textContent = isLoading ? "更新中" : "实时";
-      }
-
-      function setStatus(message, type = "default") {
-        statusMessage.textContent = message;
-        statusMessage.className = `status-row${type === "error" ? " is-error" : ""}`;
-      }
-
-      function formatMoney(amount, currencyCode, locale) {
-        if (typeof amount !== "number") {
-          return "--";
-        }
-
-        return new Intl.NumberFormat(locale || "zh-CN", {
-          style: "currency",
-          currency: currencyCode,
-          maximumFractionDigits: currencyCode === "JPY" ? 0 : 2,
-        }).format(amount);
-      }
-
-      function formatTime(isoString) {
-        if (!isoString) {
-          return "--";
-        }
-
-        return new Intl.DateTimeFormat("zh-CN", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }).format(new Date(isoString));
-      }
-
-      function getProductsForSelectedCategory() {
-        return state.bootstrap.products.filter(
-          (product) => product.categoryId === state.selectedCategoryId,
-        );
-      }
-
-      function getSelectedProduct() {
-        return state.bootstrap.products.find((product) => product.id === state.selectedProductId);
-      }
-
-      function updateVariantLabel() {
-        const selectedProduct = getSelectedProduct();
-        const labelText = selectedProduct?.variantKind === "fixed" ? "基础配置" : "容量 / 配置";
-        variantLabel.textContent = labelText;
-        selectedVariantMetaLabel.textContent = `当前${labelText}`;
-      }
-
-      function buildCategoryOptions() {
-        categorySelect.innerHTML = state.bootstrap.categories
-          .map((category) => `<option value="${category.id}">${category.label}</option>`)
-          .join("");
-        categorySelect.value = state.selectedCategoryId;
-      }
-
-      function buildProductOptions() {
-        const products = getProductsForSelectedCategory();
-
-        productSelect.innerHTML = products
-          .map(
-            (product) =>
-              `<option value="${product.id}">${product.label}</option>`,
-          )
-          .join("");
-
-        if (!products.some((product) => product.id === state.selectedProductId)) {
-          state.selectedProductId = products[0]?.id || null;
-        }
-
-        productSelect.value = state.selectedProductId;
-        updateVariantLabel();
-      }
-
-      function buildVariantOptions() {
-        const variants = state.snapshot?.variants || [];
-        const selectedProduct = getSelectedProduct();
-        const fallbackVariant = selectedProduct?.fixedVariantLabel || "";
-
-        variantSelect.innerHTML = variants.length
-          ? variants
-              .map(
-                (variant) =>
-                  `<option value="${variant}">${variant}</option>`,
-              )
-              .join("")
-          : `<option value="">暂无可用配置</option>`;
-
-        const preferred =
-          variants.includes(state.selectedVariant) && state.selectedVariant
-            ? state.selectedVariant
-            : state.snapshot?.recommendedVariant || variants[0] || fallbackVariant;
-
-        state.selectedVariant = preferred;
-        variantSelect.value = preferred;
-        variantSelect.disabled = !variants.length || selectedProduct?.variantKind === "fixed";
-      }
-
-      function getRegionPrice(region) {
-        const amount = region?.pricesByVariant?.[state.selectedVariant];
-        if (typeof amount !== "number") {
-          return null;
-        }
-
-        const regionMeta = state.bootstrap.regions.find((item) => item.id === region.id);
-        return formatMoney(amount, region.currencyCode, regionMeta?.locale || "en");
-      }
-
-      function renderSummary() {
-        const selectedProduct = getSelectedProduct();
-        const chinaRegion = state.snapshot.regions.find((region) => region.id === "cn");
-        const chinaRegionMeta = state.bootstrap.regions.find((region) => region.id === "cn");
-        const chinaAmount = chinaRegion?.pricesByVariant?.[state.selectedVariant];
-
-        summaryTitle.textContent = "中国大陆官网";
-        summaryNote.textContent = chinaRegion?.ok
-          ? "价格来自 Apple 中国大陆官方购买页。下方卡片已去掉中国和俄罗斯，改为对照其他国家与地区。"
-          : `当前未能读取中国官网价格${chinaRegion?.error ? `：${chinaRegion.error}` : ""}`;
-
-        chinaPrice.textContent =
-          typeof chinaAmount === "number"
-            ? formatMoney(chinaAmount, chinaRegion.currencyCode, chinaRegionMeta.locale)
-            : "--";
-        chinaMeta.textContent =
-          chinaRegion?.ok && typeof chinaAmount === "number"
-            ? `最近刷新 ${formatTime(chinaRegion.fetchedAt)} · 汇率基准 ${state.snapshot.exchangeRates?.base || "CNY"}`
-            : "当前配置暂无价格";
-        selectedProductMeta.textContent = selectedProduct?.label || "--";
-        selectedVariantMeta.textContent = state.selectedVariant || "--";
-      }
-
-      function formatCnyPrice(amount) {
-        return formatMoney(amount, "CNY", "zh-CN");
-      }
-
-      function getRegionComparison(region, chinaCnyAmount) {
-        const cnyAmount = region?.pricesInCny?.[state.selectedVariant];
-        if (typeof cnyAmount !== "number" || typeof chinaCnyAmount !== "number") {
-          return {
-            cnyAmount: cnyAmount ?? null,
-            delta: null,
-            tone: "neutral",
-            label: "暂无人民币换算",
-          };
-        }
-
-        const delta = cnyAmount - chinaCnyAmount;
-
-        if (Math.abs(delta) < 0.005) {
-          return {
-            cnyAmount,
-            delta,
-            tone: "neutral",
-            label: "与中国官网基本持平",
-          };
-        }
-
-        if (delta > 0) {
-          return {
-            cnyAmount,
-            delta,
-            tone: "expensive",
-            label: `比中国贵 ${formatCnyPrice(delta)}`,
-          };
-        }
-
-        return {
-          cnyAmount,
-          delta,
-          tone: "cheaper",
-          label: `比中国便宜 ${formatCnyPrice(Math.abs(delta))}`,
-        };
-      }
-
-      function renderRegions() {
-        const chinaRegion = state.snapshot.regions.find((region) => region.id === "cn");
-        const chinaCnyAmount = chinaRegion?.pricesInCny?.[state.selectedVariant];
-
-        const sortedRegions = state.snapshot.regions
-          .filter((region) => region.includeInComparison)
-          .sort((left, right) => {
-          const leftValue = left?.pricesInCny?.[state.selectedVariant];
-          const rightValue = right?.pricesInCny?.[state.selectedVariant];
-          const normalizedLeft = typeof leftValue === "number" ? leftValue : -1;
-          const normalizedRight = typeof rightValue === "number" ? rightValue : -1;
-          return normalizedRight - normalizedLeft;
-        });
-
-        const html = sortedRegions
-          .map((region) => {
-            const price = getRegionPrice(region);
-            const comparison = getRegionComparison(region, chinaCnyAmount);
-            const status = region.ok
-              ? `最近刷新 ${formatTime(region.fetchedAt)}`
-              : region.error || "当前不可用";
-            const cnyText =
-              typeof comparison.cnyAmount === "number"
-                ? `约合 ${formatCnyPrice(comparison.cnyAmount)}`
-                : "暂无人民币换算";
-
-            return `
-              <article class="region-card">
-                <div class="region-top">
-                  <div class="region-title">
-                    <div class="region-name">${region.label}</div>
-                  </div>
-                  <div class="region-price">${price || "--"}</div>
-                </div>
-                <div class="region-cny is-${comparison.tone}">${cnyText}</div>
-                <div class="delta-pill is-${comparison.tone}">${comparison.label}</div>
-                <div class="region-meta">
-                  ${state.selectedVariant || "--"} · ${region.currencyCode}
-                </div>
-                <div class="region-meta">${status}</div>
-                <a class="source-link" href="${region.buyUrl}" data-external-link="${region.buyUrl}">
-                  打开 ${region.label} 官网
-                </a>
-              </article>
-            `;
-          })
-          .join("");
-
-        regionList.innerHTML = html;
-      }
-
-      async function loadSnapshot({ showRefreshMessage = false } = {}) {
-        setLoading(true);
-        setStatus(
-          showRefreshMessage
-            ? "正在重新抓取 Apple 官方购买页价格…"
-            : "正在连接 Apple 官方购买页…",
-        );
-
-        try {
-          state.snapshot = await appClient.fetchSnapshot(state.selectedProductId);
-          buildVariantOptions();
-          renderSummary();
-          renderRegions();
-
-          const availableCount = state.snapshot.regions.filter(
-            (region) => region.ok && region.includeInComparison,
-          ).length;
-          const exchangeMessage = state.snapshot.exchangeRates?.ok
-            ? `汇率已更新`
-            : `汇率暂不可用`;
-          setStatus(
-            `已更新 ${availableCount} 个地区的官方价格，默认优先显示中国大陆官网，${exchangeMessage}。`,
-          );
-        } catch (error) {
-          setStatus(
-            `价格抓取失败：${error instanceof Error ? error.message : "未知错误"}`,
-            "error",
-          );
-        } finally {
-          setLoading(false);
-        }
-      }
-
-      async function initialize() {
-        state.bootstrap = await appClient.getBootstrap();
-        state.selectedCategoryId = state.bootstrap.defaultCategoryId;
-        state.selectedProductId = state.bootstrap.defaultProductId;
-        buildCategoryOptions();
-        buildProductOptions();
-        await loadSnapshot();
-      }
-
-      categorySelect.addEventListener("change", async (event) => {
-        state.selectedCategoryId = event.target.value;
-        state.selectedProductId = getProductsForSelectedCategory()[0]?.id || null;
-        state.selectedVariant = null;
-        buildProductOptions();
-        await loadSnapshot();
-      });
-
-      productSelect.addEventListener("change", async (event) => {
-        state.selectedProductId = event.target.value;
-        state.selectedVariant = null;
-        updateVariantLabel();
-        await loadSnapshot();
-      });
-
-      variantSelect.addEventListener("change", () => {
-        state.selectedVariant = variantSelect.value;
-        renderSummary();
-        renderRegions();
-        setStatus("已切换容量或配置，价格保持为刚刚抓取的官方数据。");
-      });
-
-      refreshButton.addEventListener("click", async () => {
-        await loadSnapshot({ showRefreshMessage: true });
-      });
-
-      regionList.addEventListener("click", async (event) => {
-        const link = event.target.closest("[data-external-link]");
-        if (!link) {
-          return;
-        }
-
-        event.preventDefault();
-        await appClient.openExternal(link.dataset.externalLink);
-      });
-
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/sw.js").catch(() => {});
-        });
-      }
-
-      initialize().catch((error) => {
-        setLoading(false);
-        setStatus(
-          `初始化失败：${error instanceof Error ? error.message : "未知错误"}`,
-          "error",
-        );
-      });
-    </script>
   </body>
 </html>
