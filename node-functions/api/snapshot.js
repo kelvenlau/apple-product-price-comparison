@@ -8,6 +8,7 @@ export default async function onRequest(context) {
 
     return Response.json(payload, {
       headers: {
+        "Content-Type": "application/json; charset=utf-8",
         "Cache-Control": "no-store",
       },
     });
@@ -19,6 +20,7 @@ export default async function onRequest(context) {
       {
         status: 500,
         headers: {
+          "Content-Type": "application/json; charset=utf-8",
           "Cache-Control": "no-store",
         },
       },
