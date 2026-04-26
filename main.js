@@ -210,7 +210,7 @@ const PRODUCTS = [
     label: "Apple Watch Series 11",
     buyPath: "/shop/buy-watch",
     parser: "watchCards",
-    watchHrefHint: "/shop/buy-watch/apple-watch",
+    watchHrefHint: "/shop/buy-watch/apple-watch\"",
     variantKind: "fixed",
     fixedVariantLabel: "基础款",
   },
@@ -220,7 +220,7 @@ const PRODUCTS = [
     label: "Apple Watch SE 3",
     buyPath: "/shop/buy-watch",
     parser: "watchCards",
-    watchHrefHint: "/shop/buy-watch/apple-watch-se",
+    watchHrefHint: "/shop/buy-watch/apple-watch-se\"",
     variantKind: "fixed",
     fixedVariantLabel: "基础款",
   },
@@ -541,11 +541,16 @@ function parseAggregateOfferCatalog(html, product) {
 
 function parseWatchCardsCatalog(html, product) {
   const pattern = new RegExp(
-    `${escapeRegex(product.watchHrefHint)}[\\s\\S]{0,4000}?"raw":\\{"price":"([\\d.]+)"\\}`,
+    `${escapeRegex(product.watchHrefHint)}[\\s\\S]{0,4000}`,
     "i",
   );
   const match = html.match(pattern);
-  const amount = Number(match?.[1]);
+  const cardChunk = match?.[0] || "";
+  const visiblePriceMatch = cardChunk.match(/RMB\s*([\d,]+(?:\.\d+)?)/i);
+  const rawPriceMatch = cardChunk.match(/"raw":\{"price":"([\d.]+)"\}/i);
+  const amount = Number(
+    visiblePriceMatch?.[1]?.replaceAll(",", "") || rawPriceMatch?.[1],
+  );
 
   if (!Number.isFinite(amount)) {
     throw new Error("未找到 Watch 基础款价格。");
