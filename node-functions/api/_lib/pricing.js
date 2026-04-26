@@ -742,9 +742,9 @@ export async function fetchProductSnapshot(productId) {
     ),
   ]);
 
-  const variants = sortVariants(
-    results.flatMap((item) => (item.ok ? item.data.variants : [])),
-  );
+  const variants = sortVariants([
+    ...new Set(results.flatMap((item) => (item.ok ? item.data.variants : []))),
+  ]);
 
   const defaultRegionResult =
     results.find((item) => item.region.isDefault && item.ok) ||
