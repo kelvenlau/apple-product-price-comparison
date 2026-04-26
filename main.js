@@ -208,9 +208,8 @@ const PRODUCTS = [
     id: "apple-watch",
     categoryId: "watch",
     label: "Apple Watch Series 11",
-    buyPath: "/shop/buy-watch",
-    parser: "watchCards",
-    watchHrefHint: "/shop/buy-watch/apple-watch\"",
+    buyPath: "/shop/buy-watch/apple-watch",
+    parser: "watchPage",
     variantKind: "fixed",
     fixedVariantLabel: "基础款",
   },
@@ -218,9 +217,8 @@ const PRODUCTS = [
     id: "apple-watch-se",
     categoryId: "watch",
     label: "Apple Watch SE 3",
-    buyPath: "/shop/buy-watch",
-    parser: "watchCards",
-    watchHrefHint: "/shop/buy-watch/apple-watch-se\"",
+    buyPath: "/shop/buy-watch/apple-watch-se",
+    parser: "watchPage",
     variantKind: "fixed",
     fixedVariantLabel: "基础款",
   },
@@ -228,9 +226,8 @@ const PRODUCTS = [
     id: "apple-watch-ultra",
     categoryId: "watch",
     label: "Apple Watch Ultra 3",
-    buyPath: "/shop/buy-watch",
-    parser: "watchCards",
-    watchHrefHint: "/shop/buy-watch/apple-watch-ultra/",
+    buyPath: "/shop/buy-watch/apple-watch-ultra/CASE_ULTRA_3_TI_C49",
+    parser: "watchPage",
     variantKind: "fixed",
     fixedVariantLabel: "基础款",
   },
@@ -563,6 +560,44 @@ function parseWatchCardsCatalog(html, product) {
   };
 }
 
+function parseWatchPageCatalog(html, product) {
+  const selectionJson = extractJsonBlockAfterKey(html, "productSelectionData:", "{");
+
+  if (!selectionJson) {
+    throw new Error("未找到 Watch 产品页选择数据。");
+  }
+
+  let selectionData = {};
+  try {
+    selectionData = JSON.parse(selectionJson);
+  } catch (error) {
+    throw new Error(`Watch 产品页选择数据解析失败：${error.message}`);
+  }
+
+  const amounts = Object.values(selectionData?.displayValues?.prices || {})
+    .map((entry) =>
+      Number(
+        entry?.amount ??
+          entry?.seoPrice ??
+          entry?.currentPrice?.raw_amount ??
+          entry?.currentPrice?.amount?.replace?.(/[^\d.]/g, ""),
+      ),
+    )
+    .filter((value) => Number.isFinite(value));
+
+  const lowPrice = Math.min(...amounts);
+  if (!Number.isFinite(lowPrice)) {
+    throw new Error("未找到 Watch 默认配置价格。");
+  }
+
+  const variant = product.fixedVariantLabel || DEFAULT_VARIANT_LABEL;
+  return {
+    currencyCode: "CNY",
+    variants: [variant],
+    pricesByVariant: { [variant]: lowPrice },
+  };
+}
+
 function parseMacPageSeoCatalog(html, product) {
   const productsJson = extractJsonBlockAfterKey(html, "\"products\":", "[");
   const pricesJson = extractJsonBlockAfterKey(html, "\"prices\":", "{");
@@ -641,6 +676,10 @@ function parseCatalogByProduct(html, product) {
 
   if (product.parser === "watchCards") {
     return parseWatchCardsCatalog(html, product);
+  }
+
+  if (product.parser === "watchPage") {
+    return parseWatchPageCatalog(html, product);
   }
 
   if (product.parser === "macPageSeo") {
