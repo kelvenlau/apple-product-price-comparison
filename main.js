@@ -592,7 +592,7 @@ function parseWatchPageCatalog(html, product) {
 
   const variant = product.fixedVariantLabel || DEFAULT_VARIANT_LABEL;
   return {
-    currencyCode: "CNY",
+    currencyCode: null,
     variants: [variant],
     pricesByVariant: { [variant]: lowPrice },
   };
